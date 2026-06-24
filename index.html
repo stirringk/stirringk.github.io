@@ -1,0 +1,638 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.sb-wrap{padding:1.5rem 0}
+.tabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:8px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:13px;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.section{display:none}.section.active{display:block}
+.section-header{margin-bottom:1rem}
+.section-header h2{font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.section-header p{font-size:13px;color:var(--color-text-secondary)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.scene-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;cursor:pointer;transition:border-color .2s}
+.scene-card:hover{border-color:var(--color-border-primary)}
+.scene-card.expanded{grid-column:1/-1;border-color:var(--color-border-secondary)}
+.scene-visual{height:140px;display:flex;align-items:center;justify-content:center;position:relative}
+.scene-meta{padding:12px}
+.scene-num{font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px}
+.scene-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.scene-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.expanded-detail{display:none;border-top:0.5px solid var(--color-border-tertiary);padding:16px}
+.scene-card.expanded .expanded-detail{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.detail-col h4{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.detail-col p,.detail-col li{font-size:12px;color:var(--color-text-primary);line-height:1.7}
+.detail-col ul{list-style:none;padding:0}
+.detail-col li::before{content:"·  ";color:var(--color-text-tertiary)}
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--border-radius-md);font-size:11px;margin-bottom:6px}
+.badge-blue{background:var(--color-background-info);color:var(--color-text-info)}
+.badge-red{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-green{background:var(--color-background-success);color:var(--color-text-success)}
+.close-hint{font-size:11px;color:var(--color-text-tertiary);margin-top:10px;text-align:right}
+</style>
+
+<div class="sb-wrap">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('facility')">🏠 시설 이용 안전</button>
+  <button class="tab-btn" onclick="switchTab('fire')">🔥 화재 시 대피</button>
+  <button class="tab-btn" onclick="switchTab('injury')">🩹 부상 시 행동 요령</button>
+</div>
+
+<!-- 시설 이용 안전 -->
+<div id="facility" class="section active">
+  <div class="section-header">
+    <h2>파트 1 — 시설 이용 안전</h2>
+    <p>씬을 클릭하면 촬영 상세 정보를 볼 수 있어요</p>
+  </div>
+  <div class="grid" id="grid-facility">
+
+    <div class="scene-card" onclick="toggleScene(this,'facility')">
+      <div class="scene-visual" style="background:#E6F1FB">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="20" y="30" width="80" height="55" rx="4" fill="#B5D4F4" stroke="#185FA5" stroke-width="1"/>
+          <rect x="45" y="55" width="30" height="30" rx="2" fill="#185FA5" opacity=".5"/>
+          <text x="60" y="24" text-anchor="middle" font-size="11" fill="#0C447C" font-family="sans-serif">입실 전</text>
+          <circle cx="55" cy="42" r="5" fill="#185FA5" opacity=".7"/>
+          <circle cx="70" cy="42" r="5" fill="#185FA5" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 01</div>
+        <div class="scene-title">도착 & 오리엔테이션</div>
+        <div class="scene-desc">입소 절차와 안전 수칙 안내 장면</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>로비 카운터 앞 / 정면 미디엄 샷</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"안녕하세요! 유스호스텔에 오신 걸 환영해요. 입소 전에 안전 수칙을 함께 확인해봐요."</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>진행자 등장 (밝은 표정)</li>
+            <li>안전 수칙 포스터 노출</li>
+            <li>비상구 위치 자막 표시</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>시설 안전 수칙 3가지 CG</li>
+            <li>비상연락처 하단 자막</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 15초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'facility')">
+      <div class="scene-visual" style="background:#EAF3DE">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="15" y="20" width="90" height="65" rx="4" fill="#C0DD97" stroke="#3B6D11" stroke-width="1"/>
+          <rect x="25" y="30" width="25" height="45" rx="2" fill="#3B6D11" opacity=".5"/>
+          <rect x="58" y="45" width="40" height="20" rx="2" fill="#639922" opacity=".6"/>
+          <text x="78" y="58" text-anchor="middle" font-size="9" fill="#173404" font-family="sans-serif">2층 침실</text>
+          <path d="M40 55 L35 55" stroke="#3B6D11" stroke-width="2" marker-end="url(#arr2)"/>
+          <defs><marker id="arr2" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4" fill="none" stroke="#3B6D11" stroke-width="1"/></marker></defs>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 02</div>
+        <div class="scene-title">객실 이용 수칙</div>
+        <div class="scene-desc">침대, 개인 물품 보관, 취침 시간 규칙</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-green">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>다인실 객실 / 와이드 + 클로즈업 전환</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"개인 물품은 반드시 사물함에 보관하고, 취침 시간 이후에는 조용히 해주세요."</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>침대 번호 확인하는 장면</li>
+            <li>사물함 잠금 시연</li>
+            <li>NG 행동 (X표시 오버레이)</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>취침 시간 자막 CG</li>
+            <li>금지 행동 아이콘 3종</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 20초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'facility')">
+      <div class="scene-visual" style="background:#FAEEDA">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="10" y="40" width="100" height="45" rx="4" fill="#FAC775" stroke="#854F0B" stroke-width="1"/>
+          <circle cx="60" cy="40" r="18" fill="#EF9F27" opacity=".7"/>
+          <text x="60" y="44" text-anchor="middle" font-size="10" fill="#412402" font-family="sans-serif">수영장</text>
+          <line x1="30" y1="58" x2="90" y2="58" stroke="#854F0B" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="60" y="72" text-anchor="middle" font-size="9" fill="#633806" font-family="sans-serif">안전선</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 03</div>
+        <div class="scene-title">공용 시설 안전 수칙</div>
+        <div class="scene-desc">수영장·샤워실·식당 등 공용 공간 주의사항</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>공용 시설 각각 / 버드아이 + 미디엄</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"수영장에서는 뛰지 않기! 젖은 바닥은 미끄러우니 조심해요."</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>뛰는 행동 → 미끄러짐 시뮬레이션</li>
+            <li>안전 손잡이 잡기 시연</li>
+            <li>식당 배식 줄서기 장면</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>금지 행동 5가지 픽토그램</li>
+            <li>안전 행동 체크리스트</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 25초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'facility')">
+      <div class="scene-visual" style="background:#FBEAF0">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <circle cx="60" cy="50" r="35" fill="#F4C0D1" stroke="#993556" stroke-width="1"/>
+          <text x="60" y="46" text-anchor="middle" font-size="10" fill="#4B1528" font-family="sans-serif">외출 시</text>
+          <text x="60" y="60" text-anchor="middle" font-size="10" fill="#4B1528" font-family="sans-serif">반드시 신고</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 04</div>
+        <div class="scene-title">외출 & 귀소 규칙</div>
+        <div class="scene-desc">외출 신고, 통금 시간, 인솔자 연락 방법</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>현관 앞 / 미디엄 투샷</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"외출할 때는 반드시 선생님께 알리고, 혼자 외출은 절대 안 돼요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>외출 신고서 작성 장면</li>
+            <li>인솔자 연락처 확인</li>
+            <li>통금 시간 시계 CG</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>인솔자 연락처 자막</li>
+            <li>통금 시간 강조 CG</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 15초</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 화재 시 대피 -->
+<div id="fire" class="section">
+  <div class="section-header">
+    <h2>파트 2 — 화재 시 대피</h2>
+    <p>씬을 클릭하면 촬영 상세 정보를 볼 수 있어요</p>
+  </div>
+  <div class="grid" id="grid-fire">
+
+    <div class="scene-card" onclick="toggleScene(this,'fire')">
+      <div class="scene-visual" style="background:#FCEBEB">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <circle cx="60" cy="40" r="25" fill="#F7C1C1" stroke="#A32D2D" stroke-width="1.5"/>
+          <text x="60" y="36" text-anchor="middle" font-size="18" font-family="sans-serif">🔔</text>
+          <rect x="20" y="72" width="80" height="18" rx="4" fill="#E24B4A" opacity=".8"/>
+          <text x="60" y="84" text-anchor="middle" font-size="10" fill="white" font-family="sans-serif">화재 경보 발생!</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 01</div>
+        <div class="scene-title">화재 경보 인지</div>
+        <div class="scene-desc">경보음 울리는 순간, 즉시 행동 시작</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-red">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>객실 내 / 클로즈업 → 와이드</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"삐-삐-삐! 화재 경보가 울리면 바로 행동해야 해요. 절대 당황하지 마세요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>경보기 클로즈업</li>
+            <li>침착하게 일어나는 장면</li>
+            <li>빨간색 경고 화면 오버레이</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>"즉시 대피!" 붉은 자막</li>
+            <li>금지 행동: 엘리베이터 사용</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 10초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'fire')">
+      <div class="scene-visual" style="background:#FAECE7">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="10" y="20" width="100" height="65" rx="4" fill="#F5C4B3" stroke="#993C1D" stroke-width="1"/>
+          <path d="M55 85 L55 30 L65 30 L65 85" fill="#993C1D" opacity=".6"/>
+          <path d="M30 55 L52 55" stroke="#D85A30" stroke-width="2.5" stroke-linecap="round" marker-end="url(#ra)"/>
+          <path d="M70 55 L92 55" stroke="#D85A30" stroke-width="2.5" stroke-linecap="round" marker-end="url(#ra)"/>
+          <defs><marker id="ra" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5" fill="none" stroke="#D85A30" stroke-width="1.2"/></marker></defs>
+          <text x="60" y="78" text-anchor="middle" font-size="9" fill="#4A1B0C" font-family="sans-serif">문 틈 확인</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 02</div>
+        <div class="scene-title">문 틈 온도 확인</div>
+        <div class="scene-desc">방 밖으로 나가기 전 문 손잡이 온도 체크</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-red">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>객실 문 앞 / 로우 앵글 클로즈업</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"문을 열기 전! 손등으로 문 틈의 열기를 먼저 확인하세요. 뜨거우면 열면 안 돼요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>손등으로 문 확인하는 시연</li>
+            <li>두 가지 상황 분기 (안전/위험)</li>
+            <li>수건으로 문 틈 막기 시연</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>O/X 판단 분기 그래픽</li>
+            <li>"손잡이 아님, 손등 사용!" 자막</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 20초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'fire')">
+      <div class="scene-visual" style="background:#E1F5EE">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="10" y="10" width="100" height="80" rx="4" fill="#9FE1CB" stroke="#0F6E56" stroke-width="1"/>
+          <path d="M60 85 L60 20" stroke="#0F6E56" stroke-width="2" stroke-dasharray="5,3"/>
+          <text x="30" y="55" text-anchor="middle" font-size="9" fill="#04342C" font-family="sans-serif">↓ 낮게</text>
+          <text x="30" y="68" text-anchor="middle" font-size="9" fill="#04342C" font-family="sans-serif">이동</text>
+          <rect x="15" y="72" width="40" height="12" rx="2" fill="#0F6E56" opacity=".5"/>
+          <text x="35" y="81" text-anchor="middle" font-size="8" fill="white" font-family="sans-serif">비상구 →</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 03</div>
+        <div class="scene-title">낮은 자세로 대피</div>
+        <div class="scene-desc">연기 피해 몸을 낮추고 비상구로 이동</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-green">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>복도 / 사이드뷰 와이드샷</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"연기는 위로 올라가요. 코와 입을 막고 최대한 몸을 낮춰서 비상구 표지판을 따라 이동하세요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>낮은 자세 이동 시연</li>
+            <li>수건으로 코입 막기</li>
+            <li>비상구 표지판 클로즈업</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>연기 상승 인포그래픽</li>
+            <li>대피 경로 화살표 CG</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 20초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'fire')">
+      <div class="scene-visual" style="background:#EEEDFE">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="15" y="20" width="90" height="65" rx="4" fill="#CECBF6" stroke="#534AB7" stroke-width="1"/>
+          <circle cx="60" cy="52" r="20" fill="#7F77DD" opacity=".5"/>
+          <text x="60" y="48" text-anchor="middle" font-size="9" fill="#26215C" font-family="sans-serif">집결지</text>
+          <text x="60" y="60" text-anchor="middle" font-size="9" fill="#26215C" font-family="sans-serif">도착!</text>
+          <path d="M25 75 L50 60" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <path d="M95 75 L72 60" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="3,2"/>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 04</div>
+        <div class="scene-title">지정 집결지 이동</div>
+        <div class="scene-desc">건물 밖 안전 장소 집합 및 인원 확인</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>건물 외부 집결지 / 와이드샷</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"건물 밖으로 나온 뒤 미리 정해진 집결지로 이동하고, 선생님께 인원을 보고해요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>집결지 표지판 확인</li>
+            <li>인원 체크 장면</li>
+            <li>건물 재진입 금지 강조</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>집결지 지도 CG</li>
+            <li>"119 신고" 자막 강조</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 15초</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 부상 시 행동 요령 -->
+<div id="injury" class="section">
+  <div class="section-header">
+    <h2>파트 3 — 부상 시 행동 요령</h2>
+    <p>씬을 클릭하면 촬영 상세 정보를 볼 수 있어요</p>
+  </div>
+  <div class="grid" id="grid-injury">
+
+    <div class="scene-card" onclick="toggleScene(this,'injury')">
+      <div class="scene-visual" style="background:#FCEBEB">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="25" y="15" width="70" height="70" rx="8" fill="#F7C1C1" stroke="#A32D2D" stroke-width="1.5"/>
+          <rect x="52" y="30" width="16" height="40" rx="2" fill="#E24B4A" opacity=".8"/>
+          <rect x="37" y="45" width="46" height="12" rx="2" fill="#E24B4A" opacity=".8"/>
+          <text x="60" y="96" text-anchor="middle" font-size="10" fill="#A32D2D" font-family="sans-serif">응급처치</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 01</div>
+        <div class="scene-title">즉시 신고 & 도움 요청</div>
+        <div class="scene-desc">부상 발생 시 가장 먼저 해야 할 행동</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-red">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>복도 or 객실 / 미디엄샷</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"다친 친구가 생겼어요! 절대 혼자 해결하려 하지 말고 바로 선생님이나 직원에게 알리세요."</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>다친 친구 발견 장면</li>
+            <li>직원에게 뛰어가 알리기</li>
+            <li>침착하게 행동하는 모습</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-red">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>"혼자 판단 금지!" 자막</li>
+            <li>119 / 직원 연락처 CG</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 15초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'injury')">
+      <div class="scene-visual" style="background:#E1F5EE">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <ellipse cx="60" cy="50" rx="40" ry="35" fill="#9FE1CB" stroke="#0F6E56" stroke-width="1"/>
+          <path d="M60 30 Q45 50 60 70 Q75 50 60 30Z" fill="#1D9E75" opacity=".6"/>
+          <text x="60" y="90" text-anchor="middle" font-size="9" fill="#04342C" font-family="sans-serif">찰과상 처치</text>
+          <circle cx="85" cy="35" r="8" fill="#5DCAA5" opacity=".7"/>
+          <text x="85" y="38" text-anchor="middle" font-size="8" fill="#04342C" font-family="sans-serif">소독</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 02</div>
+        <div class="scene-title">찰과상·타박상 대처</div>
+        <div class="scene-desc">가벼운 상처 세척, 소독, 밴드 처치 방법</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-green">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>응급처치함 앞 / 클로즈업</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"가벼운 상처는 흐르는 물로 씻고, 소독 후 밴드를 붙여요. 응급처치함은 로비에 있어요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>흐르는 물로 세척 시연</li>
+            <li>소독약 & 밴드 사용법</li>
+            <li>응급처치함 위치 안내</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-green">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>처치 순서 번호 CG (1→2→3)</li>
+            <li>응급처치함 위치 지도</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 25초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'injury')">
+      <div class="scene-visual" style="background:#FAEEDA">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="30" y="25" width="60" height="55" rx="4" fill="#FAC775" stroke="#854F0B" stroke-width="1"/>
+          <path d="M60 25 L60 80" stroke="#BA7517" stroke-width="2"/>
+          <circle cx="60" cy="40" r="10" fill="#EF9F27" opacity=".7"/>
+          <text x="60" y="43" text-anchor="middle" font-size="9" fill="#412402" font-family="sans-serif">골절?</text>
+          <path d="M35 60 L55 60 M65 60 L85 60" stroke="#854F0B" stroke-width="1.5" stroke-linecap="round"/>
+          <text x="60" y="72" text-anchor="middle" font-size="9" fill="#633806" font-family="sans-serif">움직임 최소화</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 03</div>
+        <div class="scene-title">골절·염좌 의심 대처</div>
+        <div class="scene-desc">무리하게 움직이지 않고 고정 후 신고</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>바닥 / 탑뷰 + 사이드뷰</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"뼈가 부러진 것 같으면 절대 억지로 움직이지 말고 그 자리에서 선생님을 부르세요!"</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>움직이지 않고 기다리는 장면</li>
+            <li>주변 친구가 도움 요청</li>
+            <li>부상 부위 고정 시연</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>"움직이지 마세요!" 강조 자막</li>
+            <li>NG 행동 애니메이션</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 20초</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-card" onclick="toggleScene(this,'injury')">
+      <div class="scene-visual" style="background:#EEEDFE">
+        <svg width="120" height="100" viewBox="0 0 120 100">
+          <rect x="10" y="20" width="100" height="65" rx="4" fill="#CECBF6" stroke="#534AB7" stroke-width="1.5"/>
+          <text x="60" y="48" text-anchor="middle" font-size="22" font-family="sans-serif">📞</text>
+          <text x="60" y="68" text-anchor="middle" font-size="12" fill="#26215C" font-family="sans-serif" font-weight="bold">119</text>
+          <text x="60" y="80" text-anchor="middle" font-size="9" fill="#3C3489" font-family="sans-serif">신고 방법 안내</text>
+        </svg>
+      </div>
+      <div class="scene-meta">
+        <div class="scene-num">씬 04</div>
+        <div class="scene-title">119 신고 요령</div>
+        <div class="scene-desc">정확한 위치, 부상 상태 전달 방법</div>
+      </div>
+      <div class="expanded-detail">
+        <div class="detail-col">
+          <span class="badge badge-blue">촬영 정보</span>
+          <h4>장소 / 앵글</h4>
+          <p>어디서든 / 미디엄 클로즈업</p>
+          <h4 style="margin-top:10px">대사 / 자막</h4>
+          <p>"119에 신고할 때는 ①시설 이름과 주소 ②다친 사람 수 ③상태를 차례로 말해요."</p>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">구성 요소</span>
+          <h4>화면 요소</h4>
+          <ul>
+            <li>전화 통화 시연 장면</li>
+            <li>시설 주소 확인하는 모습</li>
+            <li>침착한 말하기 강조</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <span class="badge badge-blue">편집 포인트</span>
+          <h4>텍스트 그래픽</h4>
+          <ul>
+            <li>신고 스크립트 3단계 CG</li>
+            <li>시설 주소 하단 자막 고정</li>
+          </ul>
+          <h4 style="margin-top:10px">길이</h4>
+          <p>약 20초</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+let expanded = {};
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleScene(card, section) {
+  const key = section + '_' + Array.from(card.parentElement.children).indexOf(card);
+  if (expanded[key]) {
+    card.classList.remove('expanded');
+    expanded[key] = false;
+  } else {
+    document.querySelectorAll('#grid-'+section+' .scene-card').forEach(c => {
+      c.classList.remove('expanded');
+    });
+    Object.keys(expanded).forEach(k => { if(k.startsWith(section)) expanded[k]=false; });
+    card.classList.add('expanded');
+    expanded[key] = true;
+  }
+}
+</script>
